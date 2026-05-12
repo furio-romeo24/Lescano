@@ -1,0 +1,34 @@
+int [] hLinea;
+int cant = 20;
+float ancho;
+
+void setup(){
+  size(800,600);
+  
+  ancho = width / (float)cant;
+  hLinea = new int[cant];
+  
+  for (int i = 0; i < cant; i++){
+    hLinea[i] = height/2;
+  }
+}
+
+void draw(){
+  background(255);
+  
+  for (int i = 0; i < cant; i++){
+    float x = i * ancho;
+    rect(x, hLinea[i], ancho, height - hLinea[i]);
+  }
+  
+  actuArray();
+}
+
+void actuArray(){
+  if (mousePressed){
+    int idx = int(mouseX / ancho);
+    idx = constrain(idx, 0, cant-1);
+    
+    hLinea[idx] = mouseY;
+  }
+}
