@@ -1,0 +1,63 @@
+int columnas = 20;
+int filas = 20;
+
+int anchoCelda;
+int altoCelda;
+
+float[][] distancias;
+
+void setup() {
+  size(600, 600);
+
+  anchoCelda = width / columnas;
+  altoCelda = height / filas;
+
+  distancias = new float[columnas][filas];
+
+  noStroke();
+}
+
+void draw() {
+  background(0);
+
+  calcularDistancias();
+  dibujarGrilla();
+}
+
+void calcularDistancias() {
+
+  for (int x = 0; x < columnas; x++) {
+    for (int y = 0; y < filas; y++) {
+
+      float centroX = x * anchoCelda + anchoCelda / 2;
+      float centroY = y * altoCelda + altoCelda / 2;
+
+      float d = dist(mouseX, mouseY, centroX, centroY);
+
+      distancias[x][y] = d;
+    }
+  }
+}
+
+void dibujarGrilla() {
+
+  float distanciaMaxima = dist(0, 0, width, height);
+
+  for (int x = 0; x < columnas; x++) {
+    for (int y = 0; y < filas; y++) {
+
+      float d = distancias[x][y];
+
+      float gris = map(d, 0, distanciaMaxima, 255, 0);
+
+      fill(gris);
+
+      rect(
+        x * anchoCelda,
+        y * altoCelda,
+        anchoCelda,
+        altoCelda
+      );
+    }
+  }
+}
