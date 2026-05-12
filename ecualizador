@@ -1,0 +1,43 @@
+int cantidad = 20;
+
+float[] barras;
+
+int anchoBarra;
+
+void setup() {
+  size(800, 400);
+
+  barras = new float[cantidad];
+
+  anchoBarra = width / cantidad;
+
+  for (int i = 0; i < cantidad; i++) {
+    barras[i] = height / 2;
+  }
+}
+
+void draw() {
+  background(30);
+
+  int indice = mouseX / anchoBarra;
+
+  if (mousePressed && indice >= 0 && indice < cantidad) {
+
+    float h = height - mouseY;
+
+    h = constrain(h, 0, height);
+
+    barras[indice] = h;
+  }
+
+  for (int i = 0; i < cantidad; i++) {
+
+    float x = i * anchoBarra;
+
+    float h = barras[i];
+
+    fill(200);
+
+    rect(x, height - h, anchoBarra - 2, h);
+  }
+}
