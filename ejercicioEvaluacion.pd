@@ -1,0 +1,74 @@
+let moviles = [];
+const NUM_MOVILES = 25;   
+const RADIO_LIMITE = 150;  
+
+function setup() {
+  createCanvas(800, 600);
+  
+  for (let i = 0; i < NUM_MOVILES; i++) {
+    moviles.push(new Movil());
+  }
+}
+
+function draw() {
+  background(20);
+  
+  let centroX = width / 2;
+  let centroY = height / 2;
+  
+  noFill();
+  stroke(255, 255, 255, 30); 
+  strokeWeight(1);
+  ellipse(centroX, centroY, RADIO_LIMITE * 2);
+  
+  fill(255, 100, 100);
+  noStroke();
+  ellipse(centroX, centroY, 10);
+  
+  for (let m of moviles) {
+    m.actualizar();
+    m.rebotar();
+    m.mostrar();
+    
+
+    let d = dist(m.x, m.y, centroX, centroY);
+    
+    if (d < RADIO_LIMITE) {
+      stroke(0, 255, 200, 150); 
+      strokeWeight(1.5);
+      line(m.x, m.y, centroX, centroY);
+    }
+  }
+}
+
+class Movil {
+  constructor() {
+    this.x = random(width);
+    this.y = random(height);
+    
+    this.vx = random(-3, 3);
+    this.vy = random(-3, 3);
+    
+    this.tamano = 12;
+  }
+  
+  actualizar() {
+    this.x += this.vx;
+    this.y += this.vy;
+  }
+  
+  rebotar() {
+    if (this.x < this.tamano / 2 || this.x > width - this.tamano / 2) {
+      this.vx *= -1;
+    }
+    if (this.y < this.tamano / 2 || this.y > height - this.tamano / 2) {
+      this.vy *= -1; 
+    }
+  }
+  
+  mostrar() {
+    fill(255);
+    noStroke();
+    ellipse(this.x, this.y, this.tamano);
+  }
+}
